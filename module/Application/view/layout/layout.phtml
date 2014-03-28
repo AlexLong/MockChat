@@ -1,0 +1,18 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <?php echo $this->partial("layout/html_head")?>
+    <body>
+
+
+    <?php echo $this->partial("layout/navbar")?>
+        <div class="container">
+            <?php echo $this->content; ?>
+            <hr>
+            <footer>
+                <p>&copy; 2005 - <?php echo date('Y') ?> by MiddleFront Design, LTD.</p>
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>
