@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ZendSkeletonApplication
 =======================
 
@@ -75,3 +76,9 @@ project and you should be ready to go! It should look something like below:
             Allow from all
         </Directory>
     </VirtualHost>
+=======
+MockChat
+========
+
+Php backend for node js
+>>>>>>> 9a87e7d1e8a4db4412595149ad35bd32337cc369

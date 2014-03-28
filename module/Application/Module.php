@@ -45,18 +45,6 @@ class Module
         }
     }
 
-    /*
-    public function registerStrategy($e){
-        $sharedEvents        = $e->getApplication()->getEventManager()->getSharedManager();
-        $sm = $e->getApplication()->getServiceManager();
-
-        $sharedEvents->attach(__NAMESPACE__, MvcEvent::EVENT_DISPATCH, function($e) use ($sm) {
-            $strategy = $sm->get('ImageStrategy');
-            $view     = $sm->get('ViewManager')->getView();
-            $strategy->attach($view->getEventManager());
-        }, 100);
-    }
-    */
     public function getConfig()
     {
         $conf = array_merge_recursive(
