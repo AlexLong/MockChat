@@ -16,7 +16,8 @@ return array(
         'UserTimeline',
         'UserAuc',
         'UserProfileEditor',
-        'UserPost'
+        'UserPost',
+        'MockChat'
         ),
     'module_listener_options' => array(
         'module_paths' => array(

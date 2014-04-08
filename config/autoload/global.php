@@ -40,7 +40,15 @@ return array(
                 'name' => 'c_user',
             ),
         ),
+
         'storage' => 'Zend\Session\Storage\SessionArrayStorage',
+        'handler_options' => array(
+            'database' => 'ribbit',
+            'collection' => 'sessions',
+            'dataField' => 'session',
+            'lifetimeField' => 'expires'
+        ),
+
         'validators' => array(
             'Zend\Session\Validator\RemoteAddr',
             'Zend\Session\Validator\HttpUserAgent',

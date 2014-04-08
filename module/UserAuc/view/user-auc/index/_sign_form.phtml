@@ -145,9 +145,6 @@
        elementList = inFields;
    };
 
-   SignValidator.prototype.addSuccess = function(element, successClass){
-
-   }
 
    SignValidator.prototype.validateElement = function(element,url){
        var self = this;
@@ -274,7 +271,7 @@
         });
         $("#sign").on("submit",function(e){
             if(validator.isReadyToSubmit()){
-                validator.$form.submit();
+               validator.$form.submit();
             }else{
                 e.preventDefault();
             }

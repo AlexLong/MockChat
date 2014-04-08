@@ -10,6 +10,7 @@ use UserProfileEditor\Form\PictureForm;
 use UserProfileEditor\Form\ProfileForm;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
+use Zend\Session\SaveHandler\MongoDB;
 use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractUserController
@@ -24,19 +25,64 @@ class IndexController extends AbstractUserController
      */
     protected $profileService;
 
-
-
     public function OnDispatch(MvcEvent $e){
         $this->getUserPlugin()->requireAuth();
         parent::onDispatch($e);
 
     }
 
+    public function pictureAction(){
+
+
+
+
+        $model = new ViewModel();
+        $picture_form = $this->getPictureForm();
+
+        $url = $this->url()->fromRoute("private_profile/p_child",array('action' => 'updateProfile'));
+        $rpg = $this->fileprg($picture_form,$url);
+        $picture = null;
+        if($rpg instanceof Response){
+            return $rpg;
+        }elseif(is_array($rpg)){
+            if($picture_form->isValid()){
+                $entity = new ProfilePicture($picture_form->get('profile_picture')->getValue());
+                $updated_val = $entity->getParsedName();
+
+                if($updated_val){
+                    $this->getProfileService()->updateProfile($updated_val);
+                }
+            }else{
+                $element = $picture_form->get('profile_picture');
+                $errorMessages = $element->getMessages();
+                if(empty($errorMessages)){
+                    $picture = $element->getValue();
+
+                }
+            }
+        }
+        $model->setVariables(array('picture_data' => $picture, 'picture_form' => $this->getPictureForm()));
+        return $model;
+
+    }
+
+    function updatePictureAction(){
+
+        $picture_form = $this->getPictureForm();
+        $url =  $this->url()->fromRoute("private_profile/p_child",array('action' => 'picture'));
+        $rpg = $this->fileprg($picture_form,$url,true);
+        if($rpg instanceof Response){
+            return $rpg;
+        }
+
+        return $this->notFoundAction();
+    }
     public function indexAction()
     {
 
         throw new \Exception("Not implemented");
     }
+
     public function profileAction(){
           if($this->getRequest()->isPost()){
               $profile_form = $this->getProfileForm();
@@ -58,49 +104,8 @@ class IndexController extends AbstractUserController
         return new ViewModel(array('profile_form' => $profile_form));
     }
 
-    public function pictureAction(){
 
-        $model = new ViewModel();
 
-        $picture_form = $this->getPictureForm();
-
-        $url =  $this->url()->fromRoute("private_profile/p_child",array('action' => 'updateProfile'));
-        $rpg = $this->fileprg($picture_form,$url);
-        $picture = null;
-        if($rpg instanceof Response){
-            return $rpg;
-        }elseif(is_array($rpg)){
-            if($picture_form->isValid()){
-              $entity = new ProfilePicture($picture_form->get('profile_picture')->getValue());
-              $updated_val = $entity->getParsedName();
-
-                if($updated_val){
-                    $this->getProfileService()->updateProfile($updated_val);
-                }
-            }else{
-                $element = $picture_form->get('profile_picture');
-                $errorMessages = $element->getMessages();
-                if(empty($errorMessages)){
-                    $picture = $element->getValue();
-
-                }
-            }
-        }
-        $model->setVariables(array('picture_data' => $picture, 'picture_form' => $this->getPictureForm()));
-        return $model;
-
-    }
-    function updatePictureAction(){
-
-        $picture_form = $this->getPictureForm();
-        $url =  $this->url()->fromRoute("private_profile/p_child",array('action' => 'picture'));
-        $rpg = $this->fileprg($picture_form,$url,true);
-        if($rpg instanceof Response){
-            return $rpg;
-        }
-
-        return $this->notFoundAction();
-    }
 
     /**
      * @return ProfileForm

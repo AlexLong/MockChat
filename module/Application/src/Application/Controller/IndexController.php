@@ -10,24 +10,28 @@
 namespace Application\Controller;
 
 
+use Application\Service\NodeAuthService;
 use UserPost\Domain\Concrete\PostRepository;
-use UserProfile\Entity\UserProfile;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
-
-
     public $post_rep;
+
+
+
 
    public function indexAction()
    {
 
- //  $res = $this->getPostRep()->findAll('user_id = '. 163);
+
 
         return new ViewModel();
    }
+
+
+
 
     /**
      * @return PostRepository

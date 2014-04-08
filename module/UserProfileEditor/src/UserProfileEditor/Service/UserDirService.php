@@ -26,7 +26,6 @@ class UserDirService implements UserDirServiceInterface{
         $this->setDirectoryPermission($options['directory_permission']);
     }
 
-
     public function createProfileDir($user_id){
         $path = $this->profileDirPath($user_id);
         if(is_dir($path)) return true;

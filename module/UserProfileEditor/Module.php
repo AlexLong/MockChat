@@ -9,6 +9,7 @@ use UserProfileEditor\ViewHelper\UserImgResolver;
 use Zend\Config\Config;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
+use Zend\Session\SaveHandler\MongoDB;
 
 
 class Module
@@ -76,6 +77,7 @@ class Module
 
                     return $picture_form;
                  },
+
 
                  'profileEditForm' => function($sm){
                   $profile_form = new ProfileForm();

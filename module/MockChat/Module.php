@@ -1,6 +1,8 @@
 <?php
 namespace MockChat;
 
+use MockChat\Domain\MockTableAggregate;
+use MockChat\Service\NodeAuthService;
 use Zend\Config\Config;
 
 class Module
@@ -26,4 +28,39 @@ class Module
             ),
         );
     }
+
+    public  function getServiceConfig(){
+        return array(
+            'invokables' => array(),
+
+            'factories' => array(
+                'node_auth' => function($sm){
+                        $sessionTable = $sm->get('mock_aggregate')->getSession();
+                        $mongo_auth = new NodeAuthService();
+                        $mongo_auth->setSessionTable($sessionTable);
+                        return $mongo_auth;
+                    },
+                'mongo_client' => function($sm){
+                        $config = $sm->get('Config');
+                        $mongoClient = new \MongoClient($config['mongodb']['server']);
+                        $data = array('client' => $mongoClient,'database' => $config['mongodb']['database']);
+                        return $data;
+                },
+                'mongodb' => function($sm){
+                        $client_set = $sm->get('mongo_client');
+                        $mongo = new \MongoDB($client_set['client'],$client_set['database']);
+
+                        return $mongo;
+                  },
+                'mock_aggregate' => function($sm){
+
+                 $aggregate = new MockTableAggregate($sm->get('mongodb'));
+                 return $aggregate;
+                 }
+            ),
+
+        );
+    }
+
+
 }

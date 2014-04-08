@@ -18,7 +18,6 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'UserProfileEditor\Controller\ProfileAsset',
-
                     ),
                 ),
                 'may_terminate' => true,
@@ -27,7 +26,7 @@ return array(
                         'type'    => 'Zend\Mvc\Router\Http\Regex',
                         'options' => array(
                          //   'route'    => '/profile_image/:user_id/:picture_name[]',
-                            'regex' => '/(?<user_id>(\d+))/profile_image/(?<pic_name>[a-zA-Z0-9_-]+)(\.(?<format>(jpg|png|gift)))',
+                            'regex' => '/(?<user_id>(.*))/profile_image/(?<pic_name>[a-zA-Z0-9_-]+)(\.(?<format>(jpg|png|gif)))',
                             'defaults' => array(
                                 'controller' => 'UserProfileEditor\Controller\ProfileAsset',
                                 'action' => 'profileImg',

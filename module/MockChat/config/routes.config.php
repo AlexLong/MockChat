@@ -2,7 +2,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'MockChat\Controller\Chat' => 'MockChat\Controller\ChatController',
+            'MockChat\Controller\Index' => 'MockChat\Controller\IndexController',
 
         ),
     ),
@@ -14,12 +14,11 @@ return array(
                 'options' => array(
                     'route'    => '/mock',
                     'defaults' => array(
-                        'controller' => 'MockChat\Controller\Chat',
+                        'controller' => 'MockChat\Controller\Index',
                         'action' => 'index'
                     ),
                 ),
             ),
-
         ),
 
 
