@@ -1,0 +1,156 @@
+
+<div class="sign-wrapper">
+
+
+    <?php
+
+    $form = $this->picture_form;
+    $form->setAttributes(array(
+        'method' => 'post',
+        'action' => $this->Url('mock_chat/chat_child', array('action' => 'updatePicture'))
+    ));
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    ?>
+
+    <div>
+        <span>Your current Avatar: </span>
+
+        <img id="user_avatar" src="<?php echo $this->profile_picture?>">
+
+
+    </div>
+    <label>
+       <b>Please select your image.</b>
+
+    </label>
+    <i>(png,jpg formats are supported. Max size 5MB)</i>
+
+    <?php echo $this->formElement($form->get('profile_picture'));?>
+
+    <div class="submit-wrapper" style="margin-top: 5px" >
+        <button type="button" disabled="disabled" id="submit_image" class="btn btn-primary">Upload</button>
+        <span id="upload_assert"></span>
+    </div>
+
+    <?php echo $this->form()->closeTag(); ?>
+</div>
+<script>
+    $(function() {
+
+        var UploadHandler = function(image_form){
+
+            this.$image_form = $(image_form);
+            this.$submit_button= $("#submit_image");
+            this.$upload_assert = $("#upload_assert");
+            this.$input_image = $("#profile_picture");
+            this.$user_avatar = $("#user_avatar");
+            this.max_size = 5242880;// Max upload size 5Mb.
+            this.sup_formats = new RegExp('(image/png|image/jpeg|image/gif)');
+
+            this.InitListeners();
+        };
+        UploadHandler.prototype.InitListeners = function(){
+
+            var self = this;
+            this.$input_image.on('change',function(){
+                self.OnValidate(this);
+            });
+
+            this.$submit_button.on('click',function(e){
+                e.preventDefault();
+                self.OnSubmit();
+            });
+        };
+
+        UploadHandler.prototype.OnValidate = function(input){
+
+            var self = this;
+            if(input.files && input.files[0]){
+                var files = input.files[0];
+                if(!self.sup_formats.test(files.type)){
+                   return self.stopProcess("The image file has invalid format.");
+                }else if(files.size > self.max_size){
+                    return self.stopProcess("The image file exceeds max size.");
+                }
+                self.AllowSubmit();
+            }else{
+               self.stopProcess("");
+            }
+        };
+        UploadHandler.prototype.stopProcess = function(message){
+            this.ErrorHelper(message);
+            this.$submit_button.prop('disabled',true);
+        };
+        UploadHandler.prototype.AllowSubmit = function(){
+            this.$submit_button.prop('disabled',false);
+            this.$upload_assert.text("");
+        };
+
+        UploadHandler.prototype.ErrorHelper = function(message){
+            this.$upload_assert.css("color","red").text(message)
+        };
+        UploadHandler.prototype.SuccessHelper = function(message){
+            this.$upload_assert.css("color","green").text(message)
+        };
+        UploadHandler.prototype.OnSuccess = function(response){
+
+            if(response.error == 0){
+                this.$user_avatar.attr("src",response.image_url);
+                this.$input_image.val("");
+                this.SuccessHelper(response.message);
+            }else if(response.error == 1){
+
+                alert(response.message);
+                this.$input_image.val("");
+                this.stopProcess("");
+            }
+        };
+
+        UploadHandler.prototype.OnSubmit = function(){
+            var self = this;
+            var data = new FormData();
+            self.$submit_button.prop('disabled',true);
+
+            jQuery.each(self.$input_image[0].files, function(i, file) {
+                data.append('profile_picture', file);
+            });
+            $.ajax({
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = Math.floor((evt.loaded / evt.total)*100);
+                            self.$upload_assert.css("color","green").text("Uploading: " + percentComplete+ "%");
+                            if(percentComplete == 100){
+                                self.$upload_assert.css("color","green").text("done");
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                },
+                url: '<?php echo $this->Url('mock_chat/chat_child', array('action' => 'updatePicture'))?>',
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                beforeSend : function(){
+                    self.$upload_assert.css("color","green").text("Processing..");
+
+                },
+                error : function(){
+                    alert("oops, Something wrong. Please try to reload page and try again.");
+                },
+                success: function(response){
+                    self.OnSuccess(response);
+
+                }
+            });
+        };
+
+        var imageHandler = new  UploadHandler ("#image_form");
+  });
+
+
+</script>
