@@ -74,12 +74,10 @@ class IndexController extends AbstractUserController
         if($rpg instanceof Response){
             return $rpg;
         }
-
         return $this->notFoundAction();
     }
     public function indexAction()
     {
-
         throw new \Exception("Not implemented");
     }
 
@@ -124,11 +122,11 @@ class IndexController extends AbstractUserController
      */
     public function getProfileService()
     {
-        if(!$this->profileService){
+        if(!$this->UploadManager){
 
-           $this->profileService = $this->serviceLocator->get('UserProfileService');
+           $this->UploadManager = $this->serviceLocator->get('UserProfileService');
         }
-        return $this->profileService;
+        return $this->UploadManager;
     }
 
     /**

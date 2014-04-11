@@ -10,33 +10,6 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'prof_asset' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route'    => '/asset',
-                    'constraints' => array(
-                    ),
-                    'defaults' => array(
-                        'controller' => 'UserProfileEditor\Controller\ProfileAsset',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'profile_img' => array(
-                        'type'    => 'Zend\Mvc\Router\Http\Regex',
-                        'options' => array(
-                         //   'route'    => '/profile_image/:user_id/:picture_name[]',
-                            'regex' => '/(?<user_id>(.*))/profile_image/(?<pic_name>[a-zA-Z0-9_-]+)(\.(?<format>(jpg|png|gif)))',
-                            'defaults' => array(
-                                'controller' => 'UserProfileEditor\Controller\ProfileAsset',
-                                'action' => 'profileImg',
-                                'format' => 'jpg'
-                            ),
-                            'spec' => '/%user_id%/profile_image/%pic_name%.%format%',
-                        ),
-                    ),
-                ),
-            ),
 
             'private_profile' => array(
                 'type' => 'Literal',

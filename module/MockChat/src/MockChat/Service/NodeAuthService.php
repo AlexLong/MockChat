@@ -11,9 +11,9 @@ namespace MockChat\Service;
 
 
 use MockChat\Domain\SessionMTable;
-use Zend\Stdlib\ArrayObject;
+use MockChat\Service\Interfaces\NodeAuthserviceInterface;
 
-class NodeAuthService {
+class NodeAuthService implements NodeAuthserviceInterface{
 
     protected $expressSession;
 

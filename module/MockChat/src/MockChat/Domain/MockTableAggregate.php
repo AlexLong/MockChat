@@ -18,6 +18,8 @@ class MockTableAggregate extends AbstractMTableAggregate {
 
     protected $user;
 
+    protected $chatOption;
+
     /**
      * @return mixed
      */
@@ -36,6 +38,16 @@ class MockTableAggregate extends AbstractMTableAggregate {
             $this->user = new UserMTable($this->mongodb,"users");
         }
         return $this->user;
+    }
+
+    /**
+     * @return ChatOptionsMTable
+     */
+    public function getChatOption(){
+        if(!$this->chatOption){
+            $this->chatOption = new ChatOptionsMTable($this->mongodb,"chat_options");
+        }
+        return $this->chatOption;
     }
 
 

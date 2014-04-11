@@ -26,7 +26,4 @@ return array(
             'ViewJsonStrategy',
         ),
     ),
-    'asset_resolver' => array(
-        'asset_directory' => '/st/app',
-    ),
 );

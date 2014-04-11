@@ -9,6 +9,8 @@ return array(
 
         ),
     ),
+
+/*
     'router' => array(
         'routes' => array(
 
@@ -76,5 +78,5 @@ return array(
 
         )
     )
-
+*/
 );

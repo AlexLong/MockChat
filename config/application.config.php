@@ -8,14 +8,14 @@
 return array(
     'modules' => array(
         'Application',
-        'ZendDeveloperTools',
+       // 'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineORMModule',
-        'BjyProfiler',
+       // 'BjyProfiler',
         'UserProfile',
         'UserTimeline',
         'UserAuc',
-        'UserProfileEditor',
+   //     'UserProfileEditor',
         'UserPost',
         'MockChat',
     ),

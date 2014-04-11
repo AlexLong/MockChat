@@ -7,6 +7,7 @@ return array(
         ),
     ),
 
+    /*
     'router' => array(
         'routes' => array(
             'index' => array(
@@ -24,4 +25,5 @@ return array(
 
 
     ),
+    */
 );

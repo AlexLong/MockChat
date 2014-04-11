@@ -2,7 +2,10 @@
 namespace MockChat;
 
 use MockChat\Domain\MockTableAggregate;
+use MockChat\Form\PictureForm;
+use MockChat\Form\PictureModel;
 use MockChat\Service\NodeAuthService;
+use MockChat\Service\UploadManager;
 use Zend\Config\Config;
 
 class Module
@@ -56,7 +59,25 @@ class Module
 
                  $aggregate = new MockTableAggregate($sm->get('mongodb'));
                  return $aggregate;
-                 }
+                 },
+                'userDirManager' => 'MockChat\Service\UserDirServiceFactory',
+
+
+                'pictureEditForm' => function($sm){
+                        $picture_form = new PictureForm();
+                        $picture_model = new PictureModel();
+                        $picture_model->setDirService($sm->get('userDirManager'));
+                        $picture_model->setUserAuc($sm->get('node_auth'));
+                        $picture_form->setInputFilter($picture_model->getInputFilter());
+                        return $picture_form;
+                },
+                'upload_manager' => function($sm){
+                    $config = $sm->get('Config');
+                    $upload_manager = new UploadManager($config['user_file_manager']
+                    ['directories']);
+                    $upload_manager->setMockAggregate($sm->get('mock_aggregate'));
+                    return $upload_manager;
+                }
             ),
 
         );

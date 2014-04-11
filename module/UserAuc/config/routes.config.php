@@ -12,7 +12,11 @@ return array(
             'route' => 'auc/auc_child',
             'action' => 'login'
         ),
-    ),
+    )
+
+
+    /*
+
     'router' => array(
         'routes' => array(
 
@@ -46,4 +50,6 @@ return array(
 
         ),
     )
+
+    */
 );

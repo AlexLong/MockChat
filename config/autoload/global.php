@@ -25,13 +25,7 @@ return array(
         ),
     ),
 
-    'user_file_manager' => array(
-        'directories' => array(
-            'public_directory' => 'data/user_assets',
-            'profile_image_folder' => 'rpr',
-        ),
-        'directory_permission' => 755
-    ),
+
 
     'session' => array(
         'config' => array(
