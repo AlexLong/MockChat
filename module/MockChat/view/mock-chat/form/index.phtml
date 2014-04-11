@@ -24,7 +24,7 @@
        <b>Please select your image.</b>
 
     </label>
-    <i>(png,jpg formats are supported. Max size 5MB)</i>
+    <i>(png,jpg,gif formats are supported. Max size 5MB)</i>
 
     <?php echo $this->formElement($form->get('profile_picture'));?>
 
@@ -98,9 +98,8 @@
             if(response.error == 0){
                 this.$user_avatar.attr("src",response.image_url);
                 this.$input_image.val("");
-                this.SuccessHelper(response.message);
+                this.SuccessHelper("done");
             }else if(response.error == 1){
-
                 alert(response.message);
                 this.$input_image.val("");
                 this.stopProcess("");
@@ -116,6 +115,7 @@
                 data.append('profile_picture', file);
             });
             $.ajax({
+                /*
                 xhr: function() {
                     var xhr = new window.XMLHttpRequest();
                     xhr.upload.addEventListener("progress", function(evt) {
@@ -129,6 +129,7 @@
                     }, false);
                     return xhr;
                 },
+                */
                 url: '<?php echo $this->Url('mock_chat/chat_child', array('action' => 'updatePicture'))?>',
                 data: data,
                 cache: false,

@@ -42,14 +42,12 @@ class FormController extends AbstractActionController
 
       parent::onDispatch($e);
 
-
     }
 
     public function indexAction()
     {
 
      $current_picture = $this->getUploadManager()->getUserPicture($this->getNodeAuth()->get_identity());
-
 
        return new ViewModel(array('picture_form' => $this->getPictureForm(), "profile_picture" => $current_picture));
 
