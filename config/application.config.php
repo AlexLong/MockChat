@@ -9,15 +9,15 @@ return array(
     'modules' => array(
         'Application',
        // 'ZendDeveloperTools',
-        'DoctrineModule',
-        'DoctrineORMModule',
+       // 'DoctrineModule',
+       // 'DoctrineORMModule',
        // 'BjyProfiler',
         'UserProfile',
-        'UserTimeline',
-        'UserAuc',
-   //     'UserProfileEditor',
-        'UserPost',
-        'MockChat',
+        //'UserTimeline',
+    //'UserAuc',
+   // 'UserProfileEditor',
+     //  'UserPost',
+       'MockChat',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
